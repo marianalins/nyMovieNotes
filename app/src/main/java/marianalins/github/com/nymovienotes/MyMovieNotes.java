@@ -1,5 +1,6 @@
 package marianalins.github.com.nymovienotes;
 
+import android.app.AlertDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,6 +16,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+
+import marianalins.github.com.nymovienotes.back.NaoAchadoException;
+import marianalins.github.com.nymovienotes.back.PessoaController;
+import marianalins.github.com.nymovienotes.back.TituloController;
 
 public class MyMovieNotes extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -58,6 +66,7 @@ public class MyMovieNotes extends AppCompatActivity
 
     }
 
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -88,7 +97,7 @@ public class MyMovieNotes extends AppCompatActivity
         }
         return super.onOptionsItemSelected(item);
     }
-
+//-------------------------------------------------------------------------------------------
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -127,5 +136,23 @@ public class MyMovieNotes extends AppCompatActivity
     @Override @SuppressWarnings("StatementWithEmptyBody")
     public void onFragmentInteraction(Uri uri) {
         // vazia
+    }
+
+    public void procurarMenuClick(MenuItem v) {
+        Fragment fragment = null;
+        Class fragmentClass = FragmentoProcura.class;
+        carregaFragmento(fragment, fragmentClass);
+    }
+
+    public void adicionarMenuClick(MenuItem v) {
+        Fragment fragment = null;
+        Class fragmentClass = FragmentoAdicionar.class;
+        carregaFragmento(fragment, fragmentClass);
+    }
+
+    public void removerMenuClick(MenuItem v) {
+        Fragment fragment = null;
+        Class fragmentClass = FragmentoRemover.class;
+        carregaFragmento(fragment, fragmentClass);
     }
 }

@@ -6,9 +6,159 @@
     tools:context=".FragmentoAdicionar">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Adicionar alguma coisa" />
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_gravity=""
+        android:orientation="vertical">
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:layout_gravity="center"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1">
+                
+                <RadioButton
+                    android:id="@+id/adicionarTituloBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" 
+                    android:checked="true"
+                    android:text="Filme/Serie/Episodio"/>
+                <RadioButton
+                    android:id="@+id/adicionarPessoaBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" 
+                    android:checked="false"
+                    android:text="Ator/Diretor"/>
+                
+            </RadioGroup>
+            
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="4">
 
+                <RadioButton
+                    android:id="@+id/opcao1Btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:checked="true"
+                    android:text="Filme"/>
+                <RadioButton
+                    android:id="@+id/opcao2Btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:checked="false"
+                    android:text="Serie"/>
+                
+            </RadioGroup>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="143dp"
+                android:layout_height="161dp"
+                android:src="@mipmap/pop2"
+                />
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_gravity="center"
+                    android:text="Titulo:"/>
+
+                <EditText
+                    android:id="@+id/nomeAdicionarEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center"
+                    android:layout_marginBottom="10dp"
+                    android:inputType="textAutoComplete"
+                    android:gravity="center"
+                    android:hint="Digite Aqui o Nome"
+                    android:layout_marginHorizontal="10dp"/>
+
+
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pegar informações do IMDB"
+                    android:id="@+id/imdbActivate"
+                    android:checked="false"
+                    android:enabled="false"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/numTempTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:text="Número de Temporadas:" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="No de Temporadas (opcional)"
+            android:gravity="center"
+            android:id="@+id/numTempEditText"
+            android:inputType="textAutoComplete"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/anoTextView"
+            android:text="Sua Nota:"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/star1Image" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/star2Image" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/star3Image" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/star4Image" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/star5Image" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:id="@+id/adicionarBtn"
+            android:layout_gravity="center"
+            android:layout_marginTop="70dp"
+            android:text="Adicionar"/>
+    </LinearLayout>
+    
 </FrameLayout>

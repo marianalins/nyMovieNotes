@@ -4,13 +4,16 @@
     <item
         android:orderInCategory="102"
         android:id="@+id/procurarMenu"
+        android:onClick="procurarMenuClick"
         android:title="Procurar" />
     <item
         android:orderInCategory="103"
         android:id="@+id/adicionarMenu"
+        android:onClick="adicionarMenuClick"
         android:title="Adicionar" />
     <item
         android:orderInCategory="104"
         android:id="@+id/removerMenu"
+        android:onClick="removerMenuClick"
         android:title="Remover" />
 </menu>

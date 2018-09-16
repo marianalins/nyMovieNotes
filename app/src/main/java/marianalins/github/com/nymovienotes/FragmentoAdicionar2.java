@@ -7,24 +7,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RadioButton;
-
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link FragmentoAdicionar.OnFragmentInteractionListener} interface
+ * {@link FragmentoAdicionar2.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link FragmentoAdicionar#newInstance} factory method to
+ * Use the {@link FragmentoAdicionar2#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentoAdicionar extends Fragment implements View.OnClickListener {
-    private Button adicionarBtn;
-    private EditText nomeAdicionarEdit;
-    private RadioButton adicionarTituloBtn , adicionarPessoaBtn;
-
+public class FragmentoAdicionar2 extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -36,7 +28,7 @@ public class FragmentoAdicionar extends Fragment implements View.OnClickListener
 
     private OnFragmentInteractionListener mListener;
 
-    public FragmentoAdicionar() {
+    public FragmentoAdicionar2() {
         // Required empty public constructor
     }
 
@@ -46,11 +38,11 @@ public class FragmentoAdicionar extends Fragment implements View.OnClickListener
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentoAdicionar.
+     * @return A new instance of fragment FragmentoAdicionar2.
      */
     // TODO: Rename and change types and number of parameters
-    public static FragmentoAdicionar newInstance(String param1, String param2) {
-        FragmentoAdicionar fragment = new FragmentoAdicionar();
+    public static FragmentoAdicionar2 newInstance(String param1, String param2) {
+        FragmentoAdicionar2 fragment = new FragmentoAdicionar2();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -71,12 +63,7 @@ public class FragmentoAdicionar extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_fragmento_adicionar, container, false);
-        adicionarBtn = (Button) view.findViewById(R.id.adicionarBtn);
-        adicionarBtn.setOnClickListener(this);
-        nomeAdicionarEdit = (EditText) view.findViewById(R.id.nomeAdicionarEdit);
-        adicionarTituloBtn = (RadioButton) view.findViewById(R.id.adicionarTituloBtn);
-        return view;
+        return inflater.inflate(R.layout.fragment_fragmento_adicionar2, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -103,11 +90,6 @@ public class FragmentoAdicionar extends Fragment implements View.OnClickListener
         mListener = null;
     }
 
-    @Override
-    public void onClick(View view) {
-
-    }
-
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -122,5 +104,9 @@ public class FragmentoAdicionar extends Fragment implements View.OnClickListener
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-}
 
+    @Override
+    public void onClick(View view) {
+
+    }
+}

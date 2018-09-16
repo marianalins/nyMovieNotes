@@ -1,12 +1,21 @@
 package marianalins.github.com.nymovienotes;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+
+import marianalins.github.com.nymovienotes.back.NaoAchadoException;
+import marianalins.github.com.nymovienotes.back.PessoaController;
+import marianalins.github.com.nymovienotes.back.TituloController;
 
 
 /**
@@ -17,7 +26,11 @@ import android.view.ViewGroup;
  * Use the {@link FragmentoProcura#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentoProcura extends Fragment {
+public class FragmentoProcura extends Fragment implements View.OnClickListener {
+    private Button procurarBtn;
+    private EditText nomeEdit;
+    private RadioButton procurarTituloBtn , procurarPessoaBtn;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -64,9 +77,81 @@ public class FragmentoProcura extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fragment_one, container, false);
+        View view = inflater.inflate(R.layout.fragment_fragment_one, container, false);
+        procurarBtn = (Button) view.findViewById(R.id.procurarBtn);
+        procurarBtn.setOnClickListener(this);
+        nomeEdit = (EditText) view.findViewById(R.id.nomeEdit);
+        procurarTituloBtn = (RadioButton) view.findViewById(R.id.procurarTituloBtn);
+        return view;
+
     }
 
+    //--Eventos-------------------------------------------------------------------------------------
+
+    @Override
+    public void onClick(View view) {
+        if(view.getId() == R.id.procurarBtn) {
+            procurarBtnClick(view);
+        }
+    }
+
+    // Botão Procurar Nome
+    public void procurarBtnClick(View view) {
+        if(nomeEdit.getText().toString().trim().equals("") ||
+                nomeEdit.getText().toString().isEmpty()) {
+            criaAlert("Procura em branco" , "Digite um nome a ser procurado.");
+            nomeEdit.requestFocus();
+            return;
+        }
+
+        if(procurarTituloBtn.isChecked()) {
+            TituloController t = new TituloController();
+            try {
+                t.getTitulos(nomeEdit.getText().toString().trim());
+            } catch (NaoAchadoException e) {
+                criaAlert("Não Encontrado", "O Titulo " +
+                        nomeEdit.getText().toString().trim() + " não foi encontrado.");
+                nomeEdit.requestFocus();
+            }
+        } else {
+            PessoaController t = new PessoaController();
+            try {
+                t.getPessoa(nomeEdit.getText().toString().trim());
+            } catch (NaoAchadoException e) {
+                criaAlert("Não Encontrado", "O Artista " +
+                        nomeEdit.getText().toString().trim() + " não foi encontrado.");
+                nomeEdit.requestFocus();
+            }
+        }
+    }
+
+    public void criaAlert(String titulo , String msg) {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getContext());
+        builder1.setMessage(msg);
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                "Ok",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        /*builder1.setNegativeButton(
+                "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });*/
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+    }
+
+
+    //----------------------------------------------------------------------------------------------
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
