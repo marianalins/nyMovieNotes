@@ -9,38 +9,41 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
         android:layout_gravity=""
+        android:gravity="center_horizontal"
         android:orientation="vertical">
-        
+
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_marginBottom="10dp"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="horizontal">
+
             <RadioGroup
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" 
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginRight="20dp"
                 android:layout_marginLeft="15dp"
+                android:layout_marginRight="20dp"
                 android:layout_weight="1">
-                
+
                 <RadioButton
                     android:id="@+id/adicionarTituloBtn"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" 
+                    android:layout_height="match_parent"
                     android:checked="true"
-                    android:text="Filme/Serie/Episodio"/>
+                    android:text="Filme/Serie/Episodio" />
+
                 <RadioButton
                     android:id="@+id/adicionarPessoaBtn"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" 
+                    android:layout_height="match_parent"
                     android:checked="false"
-                    android:text="Ator/Diretor"/>
-                
+                    android:text="Ator/Diretor" />
+
             </RadioGroup>
-            
+
             <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -51,16 +54,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:checked="true"
-                    android:text="Filme"/>
+                    android:text="Filme" />
+
                 <RadioButton
                     android:id="@+id/opcao2Btn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:checked="false"
-                    android:text="Serie"/>
-                
+                    android:text="Serie" />
+
             </RadioGroup>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -69,20 +74,20 @@
             <ImageView
                 android:layout_width="143dp"
                 android:layout_height="161dp"
-                android:src="@mipmap/pop2"
-                />
-            
+                android:src="@drawable/pop2" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="1dp"
                     android:layout_gravity="center"
-                    android:text="Titulo:"/>
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Titulo:" />
 
                 <EditText
                     android:id="@+id/nomeAdicionarEdit"
@@ -90,20 +95,19 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center"
                     android:layout_marginBottom="10dp"
-                    android:inputType="textAutoComplete"
+                    android:layout_marginHorizontal="10dp"
                     android:gravity="center"
                     android:hint="Digite Aqui o Nome"
-                    android:layout_marginHorizontal="10dp"/>
-
+                    android:inputType="textAutoComplete" />
 
 
                 <CheckBox
+                    android:id="@+id/imdbActivate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Pegar informações do IMDB"
-                    android:id="@+id/imdbActivate"
                     android:checked="false"
-                    android:enabled="false"/>
+                    android:enabled="false"
+                    android:text="Pegar informações do IMDB" />
 
             </LinearLayout>
 
@@ -116,49 +120,90 @@
             android:layout_marginBottom="10dp"
             android:gravity="center"
             android:text="Número de Temporadas:" />
+
         <EditText
+            android:id="@+id/numTempEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="No de Temporadas (opcional)"
             android:gravity="center"
-            android:id="@+id/numTempEditText"
-            android:inputType="textAutoComplete"
-            />
+            android:layout_marginHorizontal="150dp"
+            android:hint="Opcional"
+            android:inputType="textAutoComplete" />
 
         <TextView
+            android:id="@+id/anoTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/anoTextView"
-            android:text="Sua Nota:"
+            android:layout_marginVertical="10dp"
             android:gravity="center"
-            android:layout_marginBottom="10dp"/>
-        <ImageView
+            android:text="Sua Nota:" />
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/star1Image" />
-        <ImageView
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/star1Image"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/greystar" />
+            <ImageView
+                android:id="@+id/star2Image"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/greystar" />
+            <ImageView
+                android:id="@+id/star3Image"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/greystar" />
+            <ImageView
+                android:id="@+id/star4Image"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/greystar" />
+            <ImageView
+                android:id="@+id/star5Image"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/greystar" />
+
+
+        </LinearLayout>
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/star2Image" />
-        <ImageView
-            android:layout_width="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_marginHorizontal="20dp"
+            android:text="Clique em continuar para adicionar mais informações ou clique em adicionar para adicionar o novo Titulo."/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/star3Image" />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/star4Image" />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/star5Image" />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" 
-            android:id="@+id/adicionarBtn"
-            android:layout_gravity="center"
-            android:layout_marginTop="70dp"
-            android:text="Adicionar"/>
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp">
+
+
+            <Button
+                android:id="@+id/adicionarBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Adicionar"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"/>
+            <Button
+                android:id="@+id/adicionarInfoBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Avançar >>" />
+
+
+        </LinearLayout>
+
     </LinearLayout>
     
 </FrameLayout>
