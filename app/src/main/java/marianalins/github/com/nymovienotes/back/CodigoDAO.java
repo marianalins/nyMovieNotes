@@ -1,5 +1,8 @@
 package marianalins.github.com.nymovienotes.back;
 
+import android.os.Environment;
+import android.util.Log;
+
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -7,11 +10,25 @@ import java.util.Map;
 public class CodigoDAO {
     private final int codPessoa = 1000000000;
     private final int codTitulo = 100000000;
-    private final String pessoaArq = "pessoa.txt";
-    private final String tituloArq = "titulo.txt";
+    // Environment.getExternalStorageDirectory().getAbsolutePath()
+    private final String path = Environment.getExternalStorageDirectory().getAbsolutePath() +
+            "/mymovienotes";
+    private final String pessoaArq = path + "/pessoa.txt";
+    private final String tituloArq = path + "/titulo.txt";
+
+
+    private void criaDiretorio() {
+        File dir = new File(path);
+        if(!dir.exists()) {
+            if(!dir.mkdirs()) {
+                Log.d("Arquivo", "Nao conseguiu criar dir");
+            }
+        }
+    }
 
     private int carregarArquivo(String nomeArq) {
         int retorno;
+        criaDiretorio();
         try (BufferedReader r = new BufferedReader(new FileReader(new File(nomeArq)))){
             retorno = r.read();
 
@@ -22,6 +39,7 @@ public class CodigoDAO {
     }
 
     private void salvarArquivo(String nomeArq , int cod) {
+        criaDiretorio();
         File arq = new File(nomeArq);
         if (!arq.exists()) {
             try{
@@ -55,6 +73,4 @@ public class CodigoDAO {
         salvarArquivo(tituloArq, codigo + 1);
         return codigo;
     }
-
-
-    }
+}

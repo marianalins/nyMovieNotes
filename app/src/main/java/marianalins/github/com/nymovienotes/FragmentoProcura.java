@@ -13,8 +13,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
+import java.util.List;
+
 import marianalins.github.com.nymovienotes.back.NaoAchadoException;
+import marianalins.github.com.nymovienotes.back.Pessoa;
 import marianalins.github.com.nymovienotes.back.PessoaController;
+import marianalins.github.com.nymovienotes.back.Titulo;
 import marianalins.github.com.nymovienotes.back.TituloController;
 
 
@@ -82,6 +86,7 @@ public class FragmentoProcura extends Fragment implements View.OnClickListener {
         procurarBtn.setOnClickListener(this);
         nomeEdit = (EditText) view.findViewById(R.id.nomeEdit);
         procurarTituloBtn = (RadioButton) view.findViewById(R.id.procurarTituloBtn);
+        procurarPessoaBtn = (RadioButton) view.findViewById(R.id.procurarPessoaBtn);
         return view;
 
     }
@@ -107,16 +112,17 @@ public class FragmentoProcura extends Fragment implements View.OnClickListener {
         if(procurarTituloBtn.isChecked()) {
             TituloController t = new TituloController();
             try {
-                t.getTitulos(nomeEdit.getText().toString().trim());
+                List<Titulo> retorno = t.getTitulos(nomeEdit.getText().toString().trim());
             } catch (NaoAchadoException e) {
                 criaAlert("Não Encontrado", "O Titulo " +
                         nomeEdit.getText().toString().trim() + " não foi encontrado.");
                 nomeEdit.requestFocus();
             }
-        } else {
+        } else if(procurarPessoaBtn.isChecked()) {
             PessoaController t = new PessoaController();
             try {
-                t.getPessoa(nomeEdit.getText().toString().trim());
+                List<Pessoa> retorno = t.getPessoa(nomeEdit.getText().toString().trim());
+                System.out.println("");
             } catch (NaoAchadoException e) {
                 criaAlert("Não Encontrado", "O Artista " +
                         nomeEdit.getText().toString().trim() + " não foi encontrado.");

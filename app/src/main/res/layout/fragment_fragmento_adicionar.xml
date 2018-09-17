@@ -32,7 +32,7 @@
                     android:id="@+id/adicionarTituloBtn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:checked="true"
+                    android:checked="false"
                     android:text="Filme/Serie/Episodio" />
 
                 <RadioButton
@@ -55,7 +55,6 @@
                     android:layout_height="match_parent"
                     android:checked="true"
                     android:text="Filme" />
-
                 <RadioButton
                     android:id="@+id/opcao2Btn"
                     android:layout_width="match_parent"
@@ -87,6 +86,7 @@
                     android:layout_gravity="center"
                     android:layout_marginBottom="1dp"
                     android:layout_marginTop="20dp"
+                    android:id="@+id/nomeAdicionarTextView"
                     android:text="Titulo:" />
 
                 <EditText
@@ -119,16 +119,18 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:gravity="center"
+            android:visibility="gone"
             android:text="Número de Temporadas:" />
 
         <EditText
             android:id="@+id/numTempEditText"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_marginHorizontal="150dp"
             android:hint="Opcional"
-            android:inputType="textAutoComplete" />
+            android:inputType="number" />
 
         <TextView
             android:id="@+id/anoTextView"
@@ -175,7 +177,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_marginHorizontal="20dp"
-            android:text="Clique em continuar para adicionar mais informações ou clique em adicionar para adicionar o novo Titulo."/>
+            android:text="Clique em avançar para adicionar mais informações ou clique em adicionar para finalizar"/>
 
 
         <LinearLayout

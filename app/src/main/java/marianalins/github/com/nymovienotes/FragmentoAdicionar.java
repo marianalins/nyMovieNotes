@@ -10,12 +10,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.IOException;
+
+import marianalins.github.com.nymovienotes.back.Ator;
+import marianalins.github.com.nymovienotes.back.Diretor;
+import marianalins.github.com.nymovienotes.back.Filme;
 import marianalins.github.com.nymovienotes.back.NaoAchadoException;
 import marianalins.github.com.nymovienotes.back.PessoaController;
+import marianalins.github.com.nymovienotes.back.Serie;
+import marianalins.github.com.nymovienotes.back.Titulo;
 import marianalins.github.com.nymovienotes.back.TituloController;
 
 
@@ -32,6 +42,9 @@ public class FragmentoAdicionar extends Fragment implements View.OnClickListener
     private EditText nomeAdicionarEdit;
     private RadioButton adicionarTituloBtn , adicionarPessoaBtn;
     private RadioButton opcao1Btn , opcao2Btn;
+    private CheckBox imdbActivate;
+    EditText numTempEditText;
+    TextView nomeAdicionarTextView, numTempTextView;
     private ImageView star1Image ,star2Image ,star3Image ,star4Image ,star5Image ;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -93,10 +106,22 @@ public class FragmentoAdicionar extends Fragment implements View.OnClickListener
         star3Image.setOnClickListener(this);
         star4Image.setOnClickListener(this);
         star5Image.setOnClickListener(this);
+        opcao1Btn = (RadioButton) view.findViewById(R.id.opcao1Btn);
+        opcao2Btn = (RadioButton) view.findViewById(R.id.opcao2Btn);
+        opcao1Btn.setOnClickListener(this);
+        opcao2Btn.setOnClickListener(this);
+        opcao1Btn.setAlpha(0);
+        opcao2Btn.setAlpha(0);
+        nomeAdicionarTextView = (TextView) view.findViewById(R.id.nomeAdicionarTextView);
+        imdbActivate = (CheckBox) view.findViewById(R.id.imdbActivate);
+        imdbActivate.setOnClickListener(this);
+        numTempEditText = (EditText) view.findViewById(R.id.numTempEditText);
+        numTempTextView = (TextView) view.findViewById(R.id.numTempTextView);
         adicionarPessoaBtn = (RadioButton) view.findViewById(R.id.adicionarPessoaBtn);
+        adicionarPessoaBtn.setOnClickListener(this);
         adicionarTituloBtn = (RadioButton) view.findViewById(R.id.adicionarTituloBtn);
+        adicionarTituloBtn.setOnClickListener(this);
         nomeAdicionarEdit = (EditText) view.findViewById(R.id.nomeAdicionarEdit);
-        adicionarTituloBtn = (RadioButton) view.findViewById(R.id.adicionarTituloBtn);
         return view;
     }
 
@@ -155,7 +180,16 @@ public class FragmentoAdicionar extends Fragment implements View.OnClickListener
 
     @Override
     public void onClick(View view) {
-        if(view.getId() == R.id.adicionarBtn) {
+        if(view.getId() == R.id.opcao1Btn) {
+            eventoRadioBtnClick();
+        } else if(view.getId() == R.id.opcao2Btn) {
+            eventoRadioBtnClick();
+        } else if(view.getId() == R.id.adicionarPessoaBtn) {
+            eventoRadioBtnClick();
+        } else if(view.getId() == R.id.adicionarTituloBtn) {
+            eventoRadioBtnClick();
+        } else if(view.getId() == R.id.adicionarBtn) {
+            adicionarBtnClick(view);
          //   adicionarBtnClick(view);
         } else if (view.getId() == R.id.star1Image) {
             acenderEstrelas(1);
@@ -170,35 +204,81 @@ public class FragmentoAdicionar extends Fragment implements View.OnClickListener
         }
     }
 
-    /*public void adicionarBtnClick(View view) {
-        if (nomeAdicionarEdit.getText().toString().trim().equals("") ||
-                nomeAdicionarEdit.getText().toString().isEmpty()) {
-            criaAlert("Em branco", "Digite um nome a ser adicionado.");
+    public void eventoRadioBtnClick() {
+        if(adicionarTituloBtn.isChecked()) {
+            opcao1Btn.setText("Filme");
+            opcao2Btn.setText("Serie");
+            opcao1Btn.setAlpha(1);
+            opcao2Btn.setAlpha(1);
+            nomeAdicionarTextView.setText("Titulo:");
+            if(opcao1Btn.isChecked()) {
+                numTempTextView.setVisibility(View.GONE);
+                numTempEditText.setVisibility(View.GONE);
+            } else {
+                numTempTextView.setVisibility(View.VISIBLE);
+                numTempEditText.setVisibility(View.VISIBLE);
+            }
+        } else if(adicionarPessoaBtn.isChecked()) {
+            opcao1Btn.setText("Ator");
+            opcao2Btn.setText("Diretor");
+            opcao1Btn.setAlpha(1);
+            opcao2Btn.setAlpha(1);
+            nomeAdicionarTextView.setText("Nome:");
+        }
+    }
+
+    private void adicionarBtnClick(View view) {
+        TituloController t = new TituloController();
+        PessoaController p = new PessoaController();
+        String nome = nomeAdicionarEdit.getText().toString().trim();
+
+        if(!adicionarPessoaBtn.isChecked() && !adicionarTituloBtn.isChecked()) {
+            criaAlert("Escolha não efetuada", "Selecionado o tipo a ser adicionado");
+            adicionarTituloBtn.requestFocus();
+            return ;
+        }
+
+        if(nome.equals("") || nome.isEmpty()) {
+            criaAlert("Procura em Branco" , "Digite o Nome Para Ser Adicionado.");
             nomeAdicionarEdit.requestFocus();
             return;
         }
 
-        if (adicionarBtn.isChecked()) {
-            TituloController t = new TituloController();
-            try {
-                t.getTitulos(nomeAdicionarEdit.getText().toString().trim());
-            } catch (NaoAchadoException e) {
-                criaAlert("Não Encontrado", "O Titulo " +
-                        nomeAdicionarEdit.getText().toString().trim() + " não foi encontrado.");
-                nomeAdicionarEdit.requestFocus();
+        if (adicionarTituloBtn.isChecked()) {
+            if (opcao1Btn.isChecked()) {
+                Filme filme = new Filme(nome);
+                t.adicionar(filme);
+
+            }else {
+                Serie serie = new Serie(nome);
+                t.adicionar(serie);
+                String temp = numTempEditText.getText().toString().trim();
+                if(!temp.isEmpty() && !temp.equals("")) {
+                    try {
+                        serie.setNumTemporadas(Integer.parseInt(temp));
+                    } catch (NumberFormatException e) {
+                        criaAlert("Número Inválido",
+                                "Formato de número invalido: " + temp);
+                        return;
+                    }
+                } else {
+                    criaAlert("Número Inválido",
+                            "Formato de número invalido: " + temp);
+                    return;
+                }
             }
         } else {
-            PessoaController t = new PessoaController();
-            try {
-                t.getPessoa(nomeAdicionarEdit.getText().toString().trim());
-            } catch (NaoAchadoException e) {
-                criaAlert("Não Encontrado", "O Artista " +
-                        nomeAdicionarEdit.getText().toString().trim() + " não foi encontrado.");
-                nomeAdicionarEdit.requestFocus();
+            if(opcao1Btn.isChecked()) {
+                Ator o = new Ator(nomeAdicionarEdit.getText().toString());
+                p.adicionar(o);
+            } else {
+                Diretor d = new Diretor(nomeAdicionarEdit.getText().toString());
+                p.adicionar(d);
             }
         }
+        Toast.makeText(this.getContext(), "Adicionado com sucesso!", Toast.LENGTH_LONG).show();
+
     }
-*/
 
 
     public void criaAlert(String titulo , String msg) {
@@ -207,20 +287,12 @@ public class FragmentoAdicionar extends Fragment implements View.OnClickListener
         builder1.setCancelable(true);
 
         builder1.setPositiveButton(
-                "Ok",
+                "Entendi        ",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }
                 });
-
-    /*builder1.setNegativeButton(
-            "No",
-            new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    dialog.cancel();
-                }
-            });*/
 
         AlertDialog alert11 = builder1.create();
         alert11.show();

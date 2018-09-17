@@ -1,10 +1,12 @@
 package marianalins.github.com.nymovienotes;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
@@ -37,6 +39,12 @@ public class MyMovieNotes extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        ActivityCompat.requestPermissions(MyMovieNotes.this,
+                new String[]{
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                },100);
+
         //--Codigo do gerenciamento de fragmentos---------------------------------------------------
         Fragment fragment = null;
         Class fragmentClass = null;
@@ -63,6 +71,7 @@ public class MyMovieNotes extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         setTitle("myMovie Note");
+
 
     }
 

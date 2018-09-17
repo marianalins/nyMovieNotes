@@ -1,5 +1,9 @@
 package marianalins.github.com.nymovienotes.back;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.*;
 
 public abstract class Pessoa {
@@ -101,4 +105,5 @@ public abstract class Pessoa {
         return nome.hashCode() + dataNascimento.hashCode() +  pais.hashCode() + codigo +
                 titulos.hashCode() ;
     }
+
 }
