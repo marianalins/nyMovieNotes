@@ -1,4 +1,4 @@
-package marianalins.github.com.nymovienotes.back;
+package marianalins.github.com.nymovienotes.backend;
 
 public class NaoAchadoException extends Exception {
 

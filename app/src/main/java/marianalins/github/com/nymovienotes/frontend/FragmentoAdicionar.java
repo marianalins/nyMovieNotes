@@ -1,4 +1,4 @@
-package marianalins.github.com.nymovienotes;
+package marianalins.github.com.nymovienotes.frontend;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -17,16 +17,15 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
-
-import marianalins.github.com.nymovienotes.back.Ator;
-import marianalins.github.com.nymovienotes.back.Diretor;
-import marianalins.github.com.nymovienotes.back.Filme;
-import marianalins.github.com.nymovienotes.back.NaoAchadoException;
-import marianalins.github.com.nymovienotes.back.PessoaController;
-import marianalins.github.com.nymovienotes.back.Serie;
-import marianalins.github.com.nymovienotes.back.Titulo;
-import marianalins.github.com.nymovienotes.back.TituloController;
+import marianalins.github.com.nymovienotes.R;
+import marianalins.github.com.nymovienotes.backend.Ator;
+import marianalins.github.com.nymovienotes.backend.Diretor;
+import marianalins.github.com.nymovienotes.backend.Filme;
+import marianalins.github.com.nymovienotes.backend.Pessoa;
+import marianalins.github.com.nymovienotes.backend.PessoaController;
+import marianalins.github.com.nymovienotes.backend.Serie;
+import marianalins.github.com.nymovienotes.backend.Titulo;
+import marianalins.github.com.nymovienotes.backend.TituloController;
 
 
 /**
@@ -37,14 +36,17 @@ import marianalins.github.com.nymovienotes.back.TituloController;
  * Use the {@link FragmentoAdicionar#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentoAdicionar extends Fragment implements View.OnClickListener {
-    private Button adicionarBtn;
+public class FragmentoAdicionar extends Fragment implements View.OnClickListener,
+        FragmentoAdicionar2.OnFragmentInteractionListener {
+    private Button adicionarBtn, adicionarInfoBtn;
     private EditText nomeAdicionarEdit;
     private RadioButton adicionarTituloBtn , adicionarPessoaBtn;
     private RadioButton opcao1Btn , opcao2Btn;
     private CheckBox imdbActivate;
-    EditText numTempEditText;
-    TextView nomeAdicionarTextView, numTempTextView;
+    private EditText numTempEditText;
+    private TextView nomeAdicionarTextView, numTempTextView;
+    private Tipo tipo = Tipo.FILME;
+    private Acao acao = Acao.ADICIONAR;
     private ImageView star1Image ,star2Image ,star3Image ,star4Image ,star5Image ;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -55,11 +57,29 @@ public class FragmentoAdicionar extends Fragment implements View.OnClickListener
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Pessoa pessoa = null;
+    private Titulo titulo = null;
 
     private OnFragmentInteractionListener mListener;
 
     public FragmentoAdicionar() {
         // Required empty public constructor
+    }
+
+    public Acao getAcao() {
+        return acao;
+    }
+
+    public Tipo getTipo() {
+        return tipo;
+    }
+
+    public Pessoa getPessoa() {
+        return pessoa;
+    }
+
+    public Titulo getTitulo() {
+        return titulo;
     }
 
     /**
@@ -122,6 +142,8 @@ public class FragmentoAdicionar extends Fragment implements View.OnClickListener
         adicionarTituloBtn = (RadioButton) view.findViewById(R.id.adicionarTituloBtn);
         adicionarTituloBtn.setOnClickListener(this);
         nomeAdicionarEdit = (EditText) view.findViewById(R.id.nomeAdicionarEdit);
+        adicionarInfoBtn = (Button) view.findViewById(R.id.adicionarInfoBtn);
+        adicionarInfoBtn.setOnClickListener(this);
         return view;
     }
 
@@ -148,11 +170,6 @@ public class FragmentoAdicionar extends Fragment implements View.OnClickListener
                 star1Image.setImageResource(R.drawable.goldstar);
         }
     }
-
-
-
-
-
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -190,7 +207,9 @@ public class FragmentoAdicionar extends Fragment implements View.OnClickListener
             eventoRadioBtnClick();
         } else if(view.getId() == R.id.adicionarBtn) {
             adicionarBtnClick(view);
-         //   adicionarBtnClick(view);
+            //   adicionarBtnClick(view);
+        } else if(view.getId() == R.id.adicionarInfoBtn) {
+            adicionarInfoBtnClick(view);
         } else if (view.getId() == R.id.star1Image) {
             acenderEstrelas(1);
         } else if (view.getId() == R.id.star2Image) {
@@ -202,6 +221,24 @@ public class FragmentoAdicionar extends Fragment implements View.OnClickListener
         } else if (view.getId() == R.id.star5Image) {
             acenderEstrelas(5);
         }
+    }
+
+    public void adicionarInfoBtnClick(View view) {
+        adicionarBtnClick(view);
+//        MyMovieNotes act = (MyMovieNotes) getActivity();
+//        System.out.println(act);
+        FragmentoAdicionar2 frag;
+        if(tipo == Tipo.FILME || tipo == Tipo.SERIE || tipo == Tipo.EPISODIO){
+            frag = FragmentoAdicionar2.newInstance(acao, tipo, titulo);
+        } else {
+            frag = FragmentoAdicionar2.newInstance(acao, tipo, pessoa);
+        }
+        getFragmentManager().beginTransaction().replace(R.id.fragmentoPrincipal, frag).commitNow();
+        /*if(tipo == Tipo.FILME || tipo == Tipo.SERIE || tipo == Tipo.EPISODIO){
+            act.fragmentoAdicionar2(acao, tipo, titulo);
+        } else {
+            act.fragmentoAdicionar2(acao, tipo, pessoa);
+        }*/
     }
 
     public void eventoRadioBtnClick() {
@@ -227,6 +264,8 @@ public class FragmentoAdicionar extends Fragment implements View.OnClickListener
         }
     }
 
+
+
     private void adicionarBtnClick(View view) {
         TituloController t = new TituloController();
         PessoaController p = new PessoaController();
@@ -248,10 +287,12 @@ public class FragmentoAdicionar extends Fragment implements View.OnClickListener
             if (opcao1Btn.isChecked()) {
                 Filme filme = new Filme(nome);
                 t.adicionar(filme);
-
+                titulo = filme;
+                tipo = Tipo.FILME;
             }else {
                 Serie serie = new Serie(nome);
                 t.adicionar(serie);
+                tipo = Tipo.SERIE;
                 String temp = numTempEditText.getText().toString().trim();
                 if(!temp.isEmpty() && !temp.equals("")) {
                     try {
@@ -261,25 +302,30 @@ public class FragmentoAdicionar extends Fragment implements View.OnClickListener
                                 "Formato de número invalido: " + temp);
                         return;
                     }
-                } else {
-                    criaAlert("Número Inválido",
-                            "Formato de número invalido: " + temp);
-                    return;
                 }
+                titulo = serie;
             }
         } else {
             if(opcao1Btn.isChecked()) {
                 Ator o = new Ator(nomeAdicionarEdit.getText().toString());
                 p.adicionar(o);
+                tipo = Tipo.ATOR;
+                pessoa = o;
             } else {
                 Diretor d = new Diretor(nomeAdicionarEdit.getText().toString());
                 p.adicionar(d);
+                tipo = Tipo.DIRETOR;
+                pessoa = d;
             }
         }
         Toast.makeText(this.getContext(), "Adicionado com sucesso!", Toast.LENGTH_LONG).show();
 
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
 
     public void criaAlert(String titulo , String msg) {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getContext());
@@ -308,9 +354,15 @@ public class FragmentoAdicionar extends Fragment implements View.OnClickListener
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+        //
     }
 }
 

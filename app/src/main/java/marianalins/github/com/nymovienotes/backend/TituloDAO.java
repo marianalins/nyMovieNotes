@@ -1,9 +1,9 @@
-package marianalins.github.com.nymovienotes.back;
+package marianalins.github.com.nymovienotes.backend;
 
 import android.os.Environment;
+import android.text.InputType;
 import android.util.Log;
 
-import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -20,6 +20,7 @@ public class TituloDAO {
 
     //--Singleton--------------------------------------------------------------
     private TituloDAO() {
+        titulos = new HashMap<>();
         criaDiretorio();
         lerArquivo();
     }   // só cria quando acessa a primeira vez
@@ -56,24 +57,30 @@ public class TituloDAO {
 
         try(ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(arq))) {
 
-            while(titulos != null) {
-                output.writeObject(titulos);
-                output.flush();
+            for(Titulo t : titulos.values()) {
+                output.writeObject(t);
             }
+            output.flush();
         } catch (IOException e) {
             //Erro ao manipular o arquivo
         }
     }
+
+    public List<Mostraveis> getLista() {
+        List<Mostraveis> list = new ArrayList<>();
+        list.addAll(titulos.values());
+        return list;
+    }
+
     @SuppressWarnings("unchecked")
     public void lerArquivo() {
-
         File arq = new File(nomeArq);
-        if(!arq.exists()) {
-            titulos = new HashMap<>();
-        }
 
         try(ObjectInputStream input = new ObjectInputStream((new FileInputStream(arq)))) {
-            titulos = (HashMap<Integer, Titulo>) input.readObject();
+            Titulo t = null;
+            while((t = (Titulo) input.readObject()) != null) {
+                titulos.put(t.getCodigo(), t);
+            }
         } catch (ClassNotFoundException classNotFoundException) {
             //Classe não encontrada
         } catch (IOException e) {
@@ -92,6 +99,7 @@ public class TituloDAO {
 
     public void remover(int codigo) {
         titulos.remove(codigo);
+        gravarOObjeto();
     }
 
     public Titulo getTitulos(int codigo) throws NaoAchadoException {

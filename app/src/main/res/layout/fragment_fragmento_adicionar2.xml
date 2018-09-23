@@ -3,56 +3,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FragmentoAdicionar2">
+    tools:context=".frontend.FragmentoAdicionar2">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:layout_marginHorizontal="10dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:id="@+id/nomeLayout">
 
             <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/nomeTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nome:"
                 android:layout_marginRight="10dp"
-                android:id="@+id/nomeTxt"/>
+                android:text="Nome:" />
 
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/nomeEdit"
-                android:inputType="text"
-                android:layout_marginRight="10dp"
-                android:gravity="center"
-                android:hint="Nome"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <android.support.v7.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pais:"
-                android:layout_marginRight="10dp"
-                android:id="@+id/paisTxt"/>
-
-            <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:id="@+id/paisEdit"
                 android:gravity="center"
-                android:hint="Pais"/>
+                android:hint="Nome"
+                android:inputType="text" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/paisLayout">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/paisTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="Pais:" />
+
+            <EditText
+                android:id="@+id/paisEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:hint="Pais"
+                android:inputType="text" />
         </LinearLayout>
 
         <LinearLayout
@@ -63,52 +65,270 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:orientation="horizontal"
-                android:layout_weight="1">
+                android:id="@+id/anoLayout">
+
                 <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/anoTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ano:"
                     android:layout_marginRight="10dp"
-                    android:id="@+id/anoTxt"/>
+                    android:text="Ano:" />
 
                 <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:id="@+id/anoEdit"
-                    android:inputType="number"
-                    android:gravity="center"
-                    android:hint="Ano"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_weight="1">
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Duração:"
-                    android:layout_marginRight="10dp"
-                    android:id="@+id/duracaoTxt"/>
-
-                <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/duracaoEdit"
-                    android:inputType="number"
                     android:gravity="center"
-                    android:hint="Duração"/>
+                    android:hint="Ano"
+                    android:inputType="number" />
+
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                ></LinearLayout>
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:id="@+id/duracaoLayout">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/duracaoTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:text="Duração:" />
+
+                <EditText
+                    android:id="@+id/duracaoEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="Duração"
+                    android:inputType="number" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/nascimentoLayout">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/nascimentoText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Data de nascimento:" />
+
+            <EditText
+                android:id="@+id/nascimentoEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:hint="Data de Nascimento"
+                android:inputType="date" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/idiomaLayout">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/idiomaText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Idioma:" />
+
+            <EditText
+                android:id="@+id/idiomaEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:hint="Idioma"
+                android:inputType="textAutoComplete" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/generoLayout">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/generoText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gênero:" />
+
+            <EditText
+                android:id="@+id/generoEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:hint="Gênero"
+                android:inputType="textAutoComplete" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/trailerLayout">
+
+            <TextView
+                android:id="@+id/trailerText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trailer URL:" />
+
+            <EditText
+                android:id="@+id/trailerEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:hint="Add URL" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:id="@+id/sinopseLayout">
+
+            <TextView
+                android:id="@+id/sinopseText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sinopse:" />
+
+            <EditText
+                android:id="@+id/sinopseEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:hint="Sinopse:"
+                android:inputType="textImeMultiLine" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/starText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:gravity="center"
+            android:visibility="gone"
+            android:text="Sua Nota:" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:id="@+id/starsLayout">
+            <ImageView
+                android:id="@+id/star1Image"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/greystar" />
+            <ImageView
+                android:id="@+id/star2Image"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/greystar" />
+            <ImageView
+                android:id="@+id/star3Image"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/greystar" />
+            <ImageView
+                android:id="@+id/star4Image"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/greystar" />
+            <ImageView
+                android:id="@+id/star5Image"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/greystar" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginBottom="1dp"
+            android:gravity="top|center"
+            android:orientation="horizontal">
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:orientation="vertical"
+               android:layout_weight="1"
+               android:id="@+id/atorAddBtnLayout"
+               android:visibility="visible">
+
+               <TextView
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:id="@+id/textoAdd"
+                   android:gravity="center_horizontal"
+                   android:text="Aicionar Ator/Diretor"/>
+               <ImageView
+                   android:id="@+id/atorAdd"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:scaleX="0.3"
+                   android:scaleY="0.3"
+                   android:src="@drawable/ator" />
+
+           </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:visibility="visible"
+                android:id="@+id/addBtnLayout">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:id="@+id/textoAdd2"
+                    android:text="Adicionar Filme/Serie"/>
+
+                <ImageView
+                    android:id="@+id/add"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleX="0.3"
+                    android:scaleY="0.3"
+                    android:src="@drawable/add" />
+
+            </LinearLayout>
+
+
+
         </LinearLayout>
 
     </LinearLayout>
+
 
 </FrameLayout>

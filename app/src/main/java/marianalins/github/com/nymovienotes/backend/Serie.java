@@ -1,9 +1,11 @@
-package marianalins.github.com.nymovienotes.back;
+package marianalins.github.com.nymovienotes.backend;
 
+import java.io.File;
+import java.io.Serializable;
 import java.net.URL;
 import java.util.*;
 
-public class Serie extends Titulo {
+public class Serie extends Titulo implements Serializable {
     private int numTemporadas;
     private Set<Integer> episodios;
     private transient TituloController tituloC = new TituloController();
@@ -14,9 +16,14 @@ public class Serie extends Titulo {
         episodios = new TreeSet<>();
     }
     //Construtor maior caso possível
-    public Serie(String nome, int ano, String pais, String idioma, int duracao, String genero, int codigo,
-                 URL trailer, int nota, int imdbNota, String sinopse, int numTemporadas, Set<Integer> episodios) {
-        super(nome, ano, pais, idioma, duracao, genero, codigo, trailer, nota, imdbNota, sinopse);
+
+
+    public Serie(String nome, int ano, String pais, String idioma, int duracao, String genero,
+                 int codigo, URL trailer, int nota, int imdbNota, String sinopse,
+                 Set<Integer> diretores, Set<Integer> atores, File foto, int numTemporadas,
+                 Set<Integer> episodios) {
+        super(nome, ano, pais, idioma, duracao, genero, codigo, trailer, nota, imdbNota,
+                sinopse, diretores, atores, foto);
         this.numTemporadas = numTemporadas;
         this.episodios = episodios;
     }
@@ -104,8 +111,7 @@ public class Serie extends Titulo {
         } else if (o instanceof Serie) {
             Serie serie = (Serie) o;
             return numTemporadas == serie.getNumTemporadas() &&
-                    episodios.equals(serie.episodios) &&
-                    tituloC.equals(serie.tituloC);
+                    episodios.equals(serie.episodios);
         }
         return false;
     }
@@ -113,5 +119,14 @@ public class Serie extends Titulo {
     @Override
     public int hashCode() {
         return super.hashCode() + numTemporadas + episodios.hashCode() + tituloC.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Serie{" +
+                "numTemporadas=" + numTemporadas +
+                ", episodios=" + episodios +
+                ", tituloC=" + tituloC +
+                '}';
     }
 }

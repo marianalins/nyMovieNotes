@@ -13,9 +13,13 @@
             android:icon="@drawable/ic_menu_gallery"
             android:title="Adicionar" />
         <item
-            android:id="@+id/nav_remover"
+            android:id="@+id/nav_removerTitulo"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Remover" />
+            android:title="Editar Filmes ou Series" />
+        <item
+            android:icon="@drawable/ic_menu_send"
+            android:id="@+id/nav_removerPessoa"
+            android:title="Editar Ator ou Diretor" />
     </group>
 
 </menu>

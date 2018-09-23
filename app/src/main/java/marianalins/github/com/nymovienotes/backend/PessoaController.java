@@ -1,4 +1,4 @@
-package marianalins.github.com.nymovienotes.back;
+package marianalins.github.com.nymovienotes.backend;
 
 import java.util.List;
 
@@ -23,6 +23,10 @@ public class PessoaController {
 
     public void remover(int codigo) {
         dao.remover(codigo);
+    }
+
+    public List<Mostraveis> getLista() {
+        return dao.getLista();
     }
 
 

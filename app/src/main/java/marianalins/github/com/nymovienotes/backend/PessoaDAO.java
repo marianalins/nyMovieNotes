@@ -1,9 +1,8 @@
-package marianalins.github.com.nymovienotes.back;
+package marianalins.github.com.nymovienotes.backend;
 
 import android.os.Environment;
 import android.util.Log;
 
-import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -74,6 +73,13 @@ public class PessoaDAO {
         }
     }
 
+    // para a View receber todas (infelizmente)
+    public List<Mostraveis> getLista() {
+        List<Mostraveis> list = new ArrayList<>();
+        list.addAll(pessoas.values());
+        return list;
+    }
+
     @SuppressWarnings("unchecked")
     public void lerArquivo() {
         File arq = new File(nomeArq);
@@ -86,6 +92,7 @@ public class PessoaDAO {
 
         } catch (ClassNotFoundException classNotFoundException) {
             //Classe não encontrada
+            pessoas = new HashMap<>();
         } catch (IOException e) {
             //Erro ao tentar ler o arquivo
         }
@@ -125,6 +132,7 @@ public class PessoaDAO {
 
     public void remover(int codigo) {
         pessoas.remove(codigo);
+        gravarOObjeto();
     }
 
 

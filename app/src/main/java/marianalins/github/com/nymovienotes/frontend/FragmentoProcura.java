@@ -1,4 +1,4 @@
-package marianalins.github.com.nymovienotes;
+package marianalins.github.com.nymovienotes.frontend;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -13,13 +13,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import marianalins.github.com.nymovienotes.back.NaoAchadoException;
-import marianalins.github.com.nymovienotes.back.Pessoa;
-import marianalins.github.com.nymovienotes.back.PessoaController;
-import marianalins.github.com.nymovienotes.back.Titulo;
-import marianalins.github.com.nymovienotes.back.TituloController;
+import marianalins.github.com.nymovienotes.R;
+import marianalins.github.com.nymovienotes.backend.Mostraveis;
+import marianalins.github.com.nymovienotes.backend.NaoAchadoException;
+import marianalins.github.com.nymovienotes.backend.Pessoa;
+import marianalins.github.com.nymovienotes.backend.PessoaController;
+import marianalins.github.com.nymovienotes.backend.Titulo;
+import marianalins.github.com.nymovienotes.backend.TituloController;
 
 
 /**
@@ -109,10 +112,12 @@ public class FragmentoProcura extends Fragment implements View.OnClickListener {
             return;
         }
 
+        List<Mostraveis> retorno = new ArrayList<>();
         if(procurarTituloBtn.isChecked()) {
             TituloController t = new TituloController();
+
             try {
-                List<Titulo> retorno = t.getTitulos(nomeEdit.getText().toString().trim());
+                retorno.addAll(t.getTitulos(nomeEdit.getText().toString().trim()));
             } catch (NaoAchadoException e) {
                 criaAlert("Não Encontrado", "O Titulo " +
                         nomeEdit.getText().toString().trim() + " não foi encontrado.");
@@ -121,14 +126,18 @@ public class FragmentoProcura extends Fragment implements View.OnClickListener {
         } else if(procurarPessoaBtn.isChecked()) {
             PessoaController t = new PessoaController();
             try {
-                List<Pessoa> retorno = t.getPessoa(nomeEdit.getText().toString().trim());
-                System.out.println("");
+                retorno.addAll(t.getPessoa(nomeEdit.getText().toString().trim()));
+
             } catch (NaoAchadoException e) {
                 criaAlert("Não Encontrado", "O Artista " +
                         nomeEdit.getText().toString().trim() + " não foi encontrado.");
                 nomeEdit.requestFocus();
             }
         }
+
+        FragmentoExibir fragmentoExibir = FragmentoExibir.newInstance(retorno);
+        getActivity().getSupportFragmentManager().beginTransaction().replace
+                (R.id.fragmentoPrincipal , fragmentoExibir).commit();
     }
 
     public void criaAlert(String titulo , String msg) {

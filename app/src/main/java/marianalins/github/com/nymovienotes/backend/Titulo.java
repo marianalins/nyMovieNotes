@@ -1,10 +1,11 @@
-package marianalins.github.com.nymovienotes.back;
+package marianalins.github.com.nymovienotes.backend;
 
+import java.io.File;
 import java.io.Serializable;
 import java.net.URL;
 import java.util.*;
 
-public abstract class Titulo implements Serializable {
+public abstract class Titulo implements Serializable, Mostraveis {
     private String nome;
     private int ano;
     private String pais;
@@ -15,8 +16,9 @@ public abstract class Titulo implements Serializable {
     private URL trailer;
     private int nota, imdbNota;
     private String sinopse;
+    private File foto;
     private Set<Integer> diretores , atores;
-    private PessoaController pessoaC = new PessoaController();
+    private transient PessoaController pessoaC = new PessoaController();
 
     // Construtor Menor caso possível.
     public Titulo(String nome) {
@@ -27,8 +29,10 @@ public abstract class Titulo implements Serializable {
     }
     // Construtor Maior caso possível.
 
-    public Titulo(String nome, int ano, String pais, String idioma, int duracao, String genero, int codigo, URL trailer,
-                  int nota, int imdbNota, String sinopse) {
+
+    public Titulo(String nome, int ano, String pais, String idioma, int duracao, String genero,
+                  int codigo, URL trailer, int nota, int imdbNota, String sinopse,
+                  Set<Integer> diretores, Set<Integer> atores , File foto) {
         this.nome = nome;
         this.ano = ano;
         this.pais = pais;
@@ -40,7 +44,9 @@ public abstract class Titulo implements Serializable {
         this.nota = nota;
         this.imdbNota = imdbNota;
         this.sinopse = sinopse;
-
+        this.diretores = diretores;
+        this.atores = atores;
+        this.foto = foto;
     }
 
     // Construtor de copia.
@@ -60,6 +66,14 @@ public abstract class Titulo implements Serializable {
     //----------------GETS E SETS------------------------------------------
     public String getNome() {
         return nome;
+    }
+
+    public File getFoto() {
+        return foto;
+    }
+
+    public void setFoto(File foto) {
+        this.foto = foto;
     }
 
     public void setNome(String nome) {
@@ -242,6 +256,7 @@ public abstract class Titulo implements Serializable {
                 diretores.hashCode() + atores.hashCode();
     }
 
+
     @Override
     public String toString() {
         return "Titulo{" +
@@ -256,9 +271,9 @@ public abstract class Titulo implements Serializable {
                 ", nota=" + nota +
                 ", imdbNota=" + imdbNota +
                 ", sinopse='" + sinopse + '\'' +
+                ", foto=" + foto +
                 ", diretores=" + diretores +
                 ", atores=" + atores +
-                ", pessoaC=" + pessoaC +
                 '}';
     }
 }

@@ -1,18 +1,18 @@
-package marianalins.github.com.nymovienotes.back;
+package marianalins.github.com.nymovienotes.backend;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.*;
 
-public abstract class Pessoa {
+public abstract class Pessoa implements Serializable, Mostraveis {
     private String nome;
     private Date dataNascimento;
     private String pais;
+    private int nota;
     private final int codigo;
+    private File foto;
     private Set<Integer> titulos;
-    private TituloController tituloC = new TituloController();
+    private transient TituloController tituloC = new TituloController();
 
     //Construtor Menor caso possível
     public Pessoa(String nome) {
@@ -20,15 +20,37 @@ public abstract class Pessoa {
         this.codigo = new CodigoController().getProximaPessoaCod();
     }
     //Construtor maior caso possível
-    public Pessoa(String nome, Date dataNascimento, String pais, int codigo) {
+
+    public Pessoa(String nome, Date dataNascimento, String pais, int codigo,
+                  Set<Integer> titulos , File foto , int nota) {
         this.nome = nome;
         this.dataNascimento = dataNascimento;
         this.pais = pais;
         this.codigo = codigo;
+        this.titulos = titulos;
+        this.foto = foto;
+        this.nota = nota;
     }
+
     //--------------GETS E SETS---------------------------------
     public String getNome() {
         return nome;
+    }
+
+    public int getNota() {
+        return nota;
+    }
+
+    public File getFoto() {
+        return foto;
+    }
+
+    public void setFoto(File foto) {
+        this.foto = foto;
+    }
+
+    public void setNota(int nota) {
+        this.nota = nota;
     }
 
     public void setNome(String nome) {
@@ -106,4 +128,16 @@ public abstract class Pessoa {
                 titulos.hashCode() ;
     }
 
+    @Override
+    public String toString() {
+        return "Pessoa{" +
+                "nome='" + nome + '\'' +
+                ", dataNascimento=" + dataNascimento +
+                ", pais='" + pais + '\'' +
+                ", nota=" + nota +
+                ", codigo=" + codigo +
+                ", foto=" + foto +
+                ", titulos=" + titulos +
+                '}';
+    }
 }

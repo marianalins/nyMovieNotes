@@ -1,4 +1,4 @@
-package marianalins.github.com.nymovienotes.back;
+package marianalins.github.com.nymovienotes.backend;
 
 import java.util.List;
 
@@ -26,6 +26,9 @@ public class TituloController {
         return dao.getTitulos(nome);
     }
 
+    public List<Mostraveis> getLista() {
+        return dao.getLista();
+    }
 
 
 }

@@ -1,13 +1,11 @@
-package marianalins.github.com.nymovienotes.back;
+package marianalins.github.com.nymovienotes.backend;
 
 import android.os.Environment;
 import android.util.Log;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
 
-public class CodigoDAO {
+public class CodigoDAOArquivo implements CodigoDAO {
     private final int codPessoa = 1000000000;
     private final int codTitulo = 100000000;
     // Environment.getExternalStorageDirectory().getAbsolutePath()
