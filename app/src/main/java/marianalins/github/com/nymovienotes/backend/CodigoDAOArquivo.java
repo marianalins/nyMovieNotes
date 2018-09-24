@@ -27,7 +27,8 @@ public class CodigoDAOArquivo implements CodigoDAO {
     private int carregarArquivo(String nomeArq) {
         int retorno;
         criaDiretorio();
-        try (BufferedReader r = new BufferedReader(new FileReader(new File(nomeArq)))){
+        try (BufferedReader r = new BufferedReader(new BufferedReader(
+                new FileReader(nomeArq)))){
             retorno = r.read();
 
         } catch (IOException e) {
