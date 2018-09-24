@@ -1,6 +1,9 @@
 package marianalins.github.com.nymovienotes.frontend;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -30,7 +33,8 @@ import marianalins.github.com.nymovienotes.backend.TituloController;
  * Use the {@link Cartoes#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Cartoes extends Fragment implements View.OnClickListener {
+public class Cartoes extends Fragment implements View.OnClickListener,
+        DialogInterface.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -164,14 +168,44 @@ public class Cartoes extends Fragment implements View.OnClickListener {
     }
 
     public void deletarClick() {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this.getContext());
+        builder1.setMessage("Deseja deletar \"" + mostravel.getNome() + "\"?");
+        builder1.setCancelable(true);
+        builder1.setPositiveButton("Sim", this);
+        builder1.setNegativeButton(
+                "Não",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+    }
+
+    public void onClick(DialogInterface dialog, int id) {
+        dialog.cancel();
         if(mostravel instanceof Titulo) {
             TituloController t = new TituloController();
             t.remover(mostravel.getCodigo());
-            getFragmentManager().beginTransaction().remove(this).commit();
         } else {
             PessoaController p = new PessoaController();
             p.remover(mostravel.getCodigo());
         }
+
+        getView().animate().alpha(0f).rotation(1080f).setDuration(850L);
+        getView().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getFragmentManager().beginTransaction().remove(Cartoes.this).commit();
+            }
+        }, 850);
+    }
+
+    public void confirmacao(String msg) {
+
     }
 
     @Override

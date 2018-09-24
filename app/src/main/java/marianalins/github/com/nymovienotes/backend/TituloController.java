@@ -3,8 +3,8 @@ package marianalins.github.com.nymovienotes.backend;
 import java.util.List;
 
 public class TituloController {
-    private static int ultimoCodigo;
-    private TituloDAO dao = TituloDAO.getInstance();
+
+    private TituloDAO dao = TituloDAOArquivo.getInstance();
 
     public void adicionar(Titulo titulo) {
         dao.adicionar(titulo);

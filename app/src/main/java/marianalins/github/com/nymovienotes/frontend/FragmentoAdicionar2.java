@@ -5,16 +5,20 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -49,6 +53,7 @@ public class FragmentoAdicionar2 extends Fragment implements View.OnClickListene
     // TODO: Rename and change types of parameters
     private Tipo tipo;
     private Acao acao;
+    private Button finalizarBtn;
     private String mParam1;
     private String mParam2;
     private Titulo titulo;
@@ -179,6 +184,8 @@ public class FragmentoAdicionar2 extends Fragment implements View.OnClickListene
         duracaoLayout  = (LinearLayout) view.findViewById(R.id.duracaoLayout);
         nascimentoLayout = (LinearLayout) view.findViewById(R.id.nascimentoLayout);
         atorAddBtnLayout = (LinearLayout) view.findViewById(R.id.atorAddBtnLayout);
+        finalizarBtn = (Button) view.findViewById(R.id.finalizarBtn);
+        finalizarBtn.setOnClickListener(this);
     }
 
 
@@ -208,20 +215,90 @@ public class FragmentoAdicionar2 extends Fragment implements View.OnClickListene
 //==================================================================================
     @Override
     public void onClick(View view) {
-        if(view.getId() == R.id.atorAdd) {
-            adicionarAtorBtnClick(view);
+        if(view.getId() == R.id.finalizarBtn) {
+            finalizarBtnClick(view);
+            FragmentoProcura f = FragmentoProcura.newInstance();
+            getFragmentManager().beginTransaction().replace(R.id.fragmentoPrincipal,
+                    f).commit();
+        } else if(view.getId() == R.id.atorAdd) {
+            adicionarBtnClick(Tipo.ATOR);
+        } else if(view.getId() == R.id.add) {
+            adicionarBtnClick(Tipo.FILME);
         }
     }
 
-    public void adicionarAtorBtnClick(View view) {
+    private void adicionarBtnClick(Tipo t) {
+        FragmentoAdicionar f;
+        if(tipo == Tipo.ATOR || tipo == Tipo.DIRETOR) {
+            f = FragmentoAdicionar.newInstance(Acao.SUBADICIONAR, t,
+                    pessoa);
+        } else {
+            f = FragmentoAdicionar.newInstance(Acao.SUBADICIONAR, t,
+                    titulo);
+
+        }
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentoPrincipal, f).commit();
+    }
+
+    public void finalizarBtnClick(View view) {
+        if(tipo == Tipo.FILME || tipo == Tipo.SERIE || tipo == Tipo.EPISODIO) {
+            tituloClick(view);
+        } else {
+            pessoaClick(view);
+        }
+    }
+    public void tituloClick(View view) {
+        TituloController t = new TituloController();
+        if(acao == Acao.ADICIONAR) {
+            if(!ehVazio(paisEdit)) {
+                titulo.setPais(paisEdit.getText().toString().trim());
+            }
+            if(!ehVazio(anoEdit)){
+                try {
+                    titulo.setAno(Integer.parseInt(anoEdit.getText().toString()));
+                } catch(NumberFormatException e) {
+                    criaAlert("Ano inválido" , "O ano " +anoEdit.getText().toString()+
+                            " não é um ano válido");
+                }
+            }
+            if(!ehVazio(duracaoEdit)) {
+                try {
+                    titulo.setDuracao(Integer.parseInt(anoEdit.getText().toString()));
+                } catch(NumberFormatException e) {
+                    criaAlert("uração inválido" , "Duração " +anoEdit.getText().toString()+
+                            " não é um ano válido");
+                }
+            }
+            if(!ehVazio(idiomaEdit)){
+                titulo.setIdioma(idiomaEdit.getText().toString().trim());
+            }
+            if(!ehVazio(generoEdit)) {
+                titulo.setGenero(generoEdit.getText().toString().trim());
+            }
+            if(!ehVazio(trailerEdit)) {
+                try{
+                    titulo.setTrailer(new URL(trailerEdit.getText().toString()));
+                } catch (MalformedURLException e) {
+                    criaAlert("URL inválido" , "Endereço digitado nãp é válido");
+                }
+            }
+
+        }
+    }
+
+
+
+    public void pessoaClick(View view) {
         PessoaController p = new PessoaController();
 
         if(acao == Acao.ADICIONAR) {
             if(tipo == Tipo.ATOR) {
                 Ator ator = (Ator) pessoa;
-                SimpleDateFormat sd = new SimpleDateFormat("dd/mm/aaaa");
+                SimpleDateFormat sd = new SimpleDateFormat("dd/MM/yyyy");
                 try {
-                    ator.setDataNascimento(sd.parse(nascimentoEdit.getText().toString()));
+                    if(!ehVazio(nascimentoEdit)){
+                        ator.setDataNascimento(sd.parse(nascimentoEdit.getText().toString()));
+                    }
                 } catch(ParseException e) {
                     criaAlert("Data Invalida", "A data entrada " + nascimentoEdit.getText().toString() +
                     " não é uma data válida!");
@@ -229,12 +306,20 @@ public class FragmentoAdicionar2 extends Fragment implements View.OnClickListene
                 if(!ehVazio(paisEdit)) {
                     ator.setPais(paisEdit.getText().toString().trim());
                 }
-                p.adicionar(ator);
             } else {
-                Diretor diretor = new Diretor(nomeEdit.getText().toString());
+                Diretor diretor = (Diretor) pessoa;
+                SimpleDateFormat sd = new SimpleDateFormat("dd/MM/yyyy");
+                try {
+                    diretor.setDataNascimento(sd.parse(nascimentoEdit.getText().toString()));
+                } catch (ParseException e) {
+                    criaAlert("Data Invalida", "A data entrada " + nascimentoEdit.getText().toString() +
+                            " não é uma data válida!");
+                }
+                if(!ehVazio(paisEdit)) {
+                    diretor.setPais(paisEdit.getText().toString().trim());
+                }
             }
         }
-
     }
 
     private boolean ehVazio(EditText e) {
@@ -311,19 +396,19 @@ public class FragmentoAdicionar2 extends Fragment implements View.OnClickListene
             trailerText.setVisibility(View.GONE);
             trailerEdit.setVisibility(View.GONE);
             textoAdd2.setVisibility(View.GONE);
-            add.setVisibility(View.GONE);
             idiomaLayout.setVisibility(View.GONE);
             generoLayout.setVisibility(View.GONE);
             starsLayout.setVisibility(View.GONE);
             sinopseLayout.setVisibility(View.GONE);
-            addBtnLayout.setVisibility(View.GONE);
+            textoAdd.setVisibility(View.GONE);
+            atorAddBtnLayout.setVisibility(View.GONE);
             trailerLayout.setVisibility(View.GONE);
-            nomeLayout.setVisibility(View.GONE);
-
+            nomeLayout.setVisibility(View.VISIBLE);
+            nomeEdit.setText(pessoa.getNome().toString());
+            nomeTxt.setVisibility(View.VISIBLE);
 
             if (acao == Acao.ADICIONAR) {
-                nomeEdit.setVisibility(View.GONE);
-                nomeTxt.setVisibility(View.GONE);
+
                 starText.setVisibility(View.GONE);
                 star1Image.setVisibility(View.GONE);
                 star2Image.setVisibility(View.GONE);
@@ -337,12 +422,11 @@ public class FragmentoAdicionar2 extends Fragment implements View.OnClickListene
             nascimentoEdit.setHint("Nº de Temporadas");
             textoAdd.setVisibility(View.GONE);
             atorAdd.setVisibility(View.GONE);
-            atorAddBtnLayout.setVisibility(View.GONE);
-
+            addBtnLayout.setVisibility(View.GONE);
+            textoAdd2.setVisibility(View.GONE);
+            nomeEdit.setText(titulo.getNome().toString());
 
             if(acao == Acao.ADICIONAR){
-                nomeEdit.setVisibility(View.GONE);
-                nomeTxt.setVisibility(View.GONE);
                 starText.setVisibility(View.GONE);
                 star1Image.setVisibility(View.GONE);
                 star2Image.setVisibility(View.GONE);

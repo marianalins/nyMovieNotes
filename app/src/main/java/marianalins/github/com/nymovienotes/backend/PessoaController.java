@@ -3,7 +3,7 @@ package marianalins.github.com.nymovienotes.backend;
 import java.util.List;
 
 public class PessoaController {
-    PessoaDAO dao = PessoaDAO.getInstance();
+    PessoaDAO dao = PessoaDAOArquivo.getInstance();
 
     public List<Pessoa> getPessoa(String nome) throws NaoAchadoException {
         return dao.getPessoa(nome);
@@ -29,31 +29,4 @@ public class PessoaController {
         return dao.getLista();
     }
 
-
-    /*public List<back.Diretor> procurarPorDiretor(String nome) {
-        List<back.Diretor> listaDiretores = new ArrayList<>();
-        for(back.Diretor d: diretores) {
-            if(d.getNome().toLowerCase().contains(nome)) {
-                listaDiretores.add(d);
-            }
-        }
-        return listaDiretores;
-    }
-
-    public void adicionarAtor(back.Ator ator) {
-        atores.add(ator);
-    }
-
-    public void adicionarDiretor(back.Diretor diretor) {
-        diretores.add(diretor);
-    }
-
-    public void removerAtor(back.Ator ator) {
-        atores.remove(ator);
-    }
-
-    public void removerDiretor(back.Diretor diretor) {
-        atores.remove(diretor);
-    }
-    */
 }

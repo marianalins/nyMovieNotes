@@ -71,6 +71,11 @@ public class FragmentoProcura extends Fragment implements View.OnClickListener {
         return fragment;
     }
 
+    public static FragmentoProcura newInstance() {
+        FragmentoProcura fragment = new FragmentoProcura();
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

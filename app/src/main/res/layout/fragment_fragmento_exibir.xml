@@ -15,15 +15,20 @@
         android:textStyle="bold"
         android:text="Filmes e Series"/>
 
-    <LinearLayout
-        android:id="@+id/filmesFragmento"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:isScrollContainer="true"
-        android:orientation="vertical"
-        android:scrollbars="vertical">
+        android:layout_marginTop="30dp"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/filmesFragmento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:isScrollContainer="true"
+            android:orientation="vertical"
+            android:scrollbars="vertical">
 
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>

@@ -269,15 +269,18 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="25dp"
-            android:layout_marginBottom="1dp"
-            android:gravity="top|center"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+
+            android:gravity="center"
             android:orientation="horizontal">
 
            <LinearLayout
                android:layout_width="match_parent"
                android:layout_height="match_parent"
                android:orientation="vertical"
+               android:gravity="center"
                android:layout_weight="1"
                android:id="@+id/atorAddBtnLayout"
                android:visibility="visible">
@@ -286,14 +289,15 @@
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:id="@+id/textoAdd"
+                   android:textStyle="bold"
                    android:gravity="center_horizontal"
-                   android:text="Aicionar Ator/Diretor"/>
+                   android:text="Adicionar Ator/Diretor"/>
                <ImageView
                    android:id="@+id/atorAdd"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:scaleX="0.3"
-                   android:scaleY="0.3"
+
+                   android:layout_width="50dp"
+                   android:layout_height="50dp"
+
                    android:src="@drawable/ator" />
 
            </LinearLayout>
@@ -302,6 +306,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:orientation="vertical"
                 android:visibility="visible"
                 android:id="@+id/addBtnLayout">
@@ -312,21 +317,29 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:id="@+id/textoAdd2"
+                    android:textStyle="bold"
                     android:text="Adicionar Filme/Serie"/>
 
                 <ImageView
                     android:id="@+id/add"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleX="0.3"
-                    android:scaleY="0.3"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:src="@drawable/add" />
 
             </LinearLayout>
 
 
 
+
         </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/finalizarBtn"
+            android:text="Finalizar"
+            />
 
     </LinearLayout>
 
