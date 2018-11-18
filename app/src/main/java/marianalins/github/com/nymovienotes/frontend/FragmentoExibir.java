@@ -15,9 +15,10 @@ import android.widget.TextView;
 
 import marianalins.github.com.nymovienotes.R;
 import java.util.List;
+
+import marianalins.github.com.nymovienotes.backend.Iterador;
 import marianalins.github.com.nymovienotes.backend.Mostraveis;
 import marianalins.github.com.nymovienotes.backend.Pessoa;
-import marianalins.github.com.nymovienotes.backend.Titulo;
 
 
 /**
@@ -39,7 +40,7 @@ public class FragmentoExibir extends Fragment implements
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private List<Mostraveis> list;
+    private Iterador<Mostraveis> iter;
 
     private OnFragmentInteractionListener mListener;
 
@@ -47,9 +48,9 @@ public class FragmentoExibir extends Fragment implements
         // Required empty public constructor
     }
 
-    public static FragmentoExibir newInstance(List<Mostraveis> list) {
+    public static FragmentoExibir newInstance(Iterador<Mostraveis> iter) {
         FragmentoExibir fragment = new FragmentoExibir();
-        fragment.list = list;
+        fragment.iter = iter;
         return fragment;
     }
 
@@ -68,8 +69,8 @@ public class FragmentoExibir extends Fragment implements
                 R.id.filmesFragmento);
 
         exibindoTxt = (TextView) view.findViewById(R.id.exibindoTxt);
-        if(!list.isEmpty()) {
-            if(list.get(0) instanceof Pessoa) {
+        if(iter.hasNext()) {
+            if(iter.peek() instanceof Pessoa) {
                 exibindoTxt.setText("Atores e Diretores");
             }
         }
@@ -83,9 +84,9 @@ public class FragmentoExibir extends Fragment implements
         FragmentTransaction fragmentTransaction = getChildFragmentManager()
                 .beginTransaction();
         //fragmentTransaction.commitNow();
-        for(int i = 0; i < list.size(); i++) {
+        while(iter.hasNext()) {
             try {
-                Cartoes fragment = Cartoes.newInstance(list.get(i));
+                Cartoes fragment = Cartoes.newInstance(iter.next());
                 fragmentTransaction.add(R.id.filmesFragmento, fragment);
             } catch(Exception e) {
                 Log.d("Fragmento", "Nao conseguiu carregar " +

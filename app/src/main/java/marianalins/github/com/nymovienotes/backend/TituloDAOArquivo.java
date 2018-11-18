@@ -65,10 +65,9 @@ public class TituloDAOArquivo implements TituloDAO {
         }
     }
 
-    public List<Mostraveis> getLista() {
-        List<Mostraveis> list = new ArrayList<>();
-        list.addAll(titulos.values());
-        return list;
+    @Override
+    public Iterador<Mostraveis> getMostraveis() {
+        return new IteradorLista<Mostraveis>(titulos.values());
     }
 
     @SuppressWarnings("unchecked")
@@ -112,8 +111,8 @@ public class TituloDAOArquivo implements TituloDAO {
         return t;
     }
 
-
-    public List<Titulo> getTitulos(String nome) throws NaoAchadoException {
+    @Override
+    public Iterador<Titulo> getTitulos(String nome) throws NaoAchadoException {
         List<Titulo> retorno = new ArrayList<>();
         for(Titulo t : titulos.values()) {
             if(t.getNome().toLowerCase().contains(nome.toLowerCase())) {
@@ -125,7 +124,7 @@ public class TituloDAOArquivo implements TituloDAO {
             throw new NaoAchadoException("back.Titulo Não Encontrado.");
         }
 
-        return retorno;
+        return new IteradorLista<>(retorno);
     }
 
 

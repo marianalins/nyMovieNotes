@@ -1,11 +1,9 @@
 package marianalins.github.com.nymovienotes.backend;
 
-import java.util.List;
-
 public class PessoaController {
-    PessoaDAO dao = PessoaDAOArquivo.getInstance();
+    PessoaDAO dao = PessoaDAOFactory.getInstance();
 
-    public List<Pessoa> getPessoa(String nome) throws NaoAchadoException {
+    public Iterador<Pessoa> getPessoa(String nome) throws NaoAchadoException {
         return dao.getPessoa(nome);
     }
 
@@ -25,8 +23,7 @@ public class PessoaController {
         dao.remover(codigo);
     }
 
-    public List<Mostraveis> getLista() {
-        return dao.getLista();
+    public Iterador<Mostraveis> getMostraveis() {
+        return dao.getMostraveis();
     }
-
 }

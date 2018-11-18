@@ -129,9 +129,9 @@ public class MyMovieNotes extends AppCompatActivity
                 fragment = FragmentoAdicionar.class.newInstance();
             } else if (id == R.id.nav_removerTitulo) {
                 TituloController t = new TituloController();
-                fragment = FragmentoExibir.newInstance(t.getLista());
+                fragment = FragmentoExibir.newInstance(t.getMostraveis());
             } else if (id == R.id.nav_removerPessoa) {
-                fragment = FragmentoExibir.newInstance(new PessoaController().getLista());
+                fragment = FragmentoExibir.newInstance(new PessoaController().getMostraveis());
             }
         } catch(Exception e) {
             return false;

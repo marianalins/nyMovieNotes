@@ -1,7 +1,7 @@
 package marianalins.github.com.nymovienotes.backend;
 
 public class CodigoController {
-    private CodigoDAO dao = new CodigoDAOArquivo();
+    private CodigoDAO dao = CodigoDAOFactory.getInstance();
 
     public int getProximaPessoaCod() {
         return dao.getProximoPessoaCod();

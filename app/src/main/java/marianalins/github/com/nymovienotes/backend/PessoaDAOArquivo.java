@@ -72,11 +72,9 @@ public class PessoaDAOArquivo implements PessoaDAO {
         }
     }
 
-    // para a View receber todas (infelizmente)
-    public List<Mostraveis> getLista() {
-        List<Mostraveis> list = new ArrayList<>();
-        list.addAll(pessoas.values());
-        return list;
+    @Override
+    public Iterador<Mostraveis> getMostraveis() {
+        return new IteradorLista<Mostraveis>(pessoas.values());
     }
 
     @SuppressWarnings("unchecked")
@@ -97,7 +95,8 @@ public class PessoaDAOArquivo implements PessoaDAO {
         }
     }
 
-    public List<Pessoa> getPessoa(String nome) throws NaoAchadoException {
+    @Override
+    public Iterador<Pessoa> getPessoa(String nome) throws NaoAchadoException {
         List<Pessoa> retorno = new ArrayList<>();
         for(Pessoa a: pessoas.values()) {
             if(a.getNome().toLowerCase().contains(nome.toLowerCase())) {
@@ -108,9 +107,10 @@ public class PessoaDAOArquivo implements PessoaDAO {
         if(retorno.size() == 0) {
             throw new NaoAchadoException("back.Pessoa Não Encontrada.");
         }
-        return retorno;
+        return new IteradorLista<>(retorno);
     }
 
+    @Override
     public Pessoa getPessoa(int codigo) throws NaoAchadoException {
         Pessoa p = pessoas.get(codigo);
         if(p == null) {
@@ -119,15 +119,18 @@ public class PessoaDAOArquivo implements PessoaDAO {
         return p;
     }
 
+    @Override
     public void adicionar(Pessoa pessoa) {
         pessoas.put(pessoa.getCodigo(),pessoa);
         gravarOObjeto();
     }
 
+    @Override
     public void remover(Pessoa pessoa) {
         remover(pessoa.getCodigo());
     }
 
+    @Override
     public void remover(int codigo) {
         pessoas.remove(codigo);
         gravarOObjeto();

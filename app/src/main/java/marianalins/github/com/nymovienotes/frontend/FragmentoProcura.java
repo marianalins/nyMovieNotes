@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import marianalins.github.com.nymovienotes.R;
+import marianalins.github.com.nymovienotes.backend.Iterador;
+import marianalins.github.com.nymovienotes.backend.IteradorLista;
 import marianalins.github.com.nymovienotes.backend.Mostraveis;
 import marianalins.github.com.nymovienotes.backend.NaoAchadoException;
 import marianalins.github.com.nymovienotes.backend.Pessoa;
@@ -96,7 +98,6 @@ public class FragmentoProcura extends Fragment implements View.OnClickListener {
         procurarTituloBtn = (RadioButton) view.findViewById(R.id.procurarTituloBtn);
         procurarPessoaBtn = (RadioButton) view.findViewById(R.id.procurarPessoaBtn);
         return view;
-
     }
 
     //--Eventos-------------------------------------------------------------------------------------
@@ -109,6 +110,8 @@ public class FragmentoProcura extends Fragment implements View.OnClickListener {
     }
 
     // Botão Procurar Nome
+
+    @SuppressWarnings("unchecked")
     public void procurarBtnClick(View view) {
         if(nomeEdit.getText().toString().trim().equals("") ||
                 nomeEdit.getText().toString().isEmpty()) {
@@ -117,12 +120,13 @@ public class FragmentoProcura extends Fragment implements View.OnClickListener {
             return;
         }
 
-        List<Mostraveis> retorno = new ArrayList<>();
         if(procurarTituloBtn.isChecked()) {
             TituloController t = new TituloController();
-
+            Iterador<Mostraveis> retorno;
             try {
-                retorno.addAll(t.getTitulos(nomeEdit.getText().toString().trim()));
+                retorno = new IteradorLista<Mostraveis>(
+                        t.getTitulos(nomeEdit.getText().toString().trim()));
+                FragmentoExibir fragmentoExibir = FragmentoExibir.newInstance(retorno);
             } catch (NaoAchadoException e) {
                 criaAlert("Não Encontrado", "O Titulo " +
                         nomeEdit.getText().toString().trim() + " não foi encontrado.");
@@ -131,7 +135,7 @@ public class FragmentoProcura extends Fragment implements View.OnClickListener {
         } else if(procurarPessoaBtn.isChecked()) {
             PessoaController t = new PessoaController();
             try {
-                retorno.addAll(t.getPessoa(nomeEdit.getText().toString().trim()));
+                retorno = t.getPessoa(nomeEdit.getText().toString().trim());
 
             } catch (NaoAchadoException e) {
                 criaAlert("Não Encontrado", "O Artista " +
@@ -140,7 +144,7 @@ public class FragmentoProcura extends Fragment implements View.OnClickListener {
             }
         }
 
-        FragmentoExibir fragmentoExibir = FragmentoExibir.newInstance(retorno);
+
         getActivity().getSupportFragmentManager().beginTransaction().replace
                 (R.id.fragmentoPrincipal , fragmentoExibir).commit();
     }

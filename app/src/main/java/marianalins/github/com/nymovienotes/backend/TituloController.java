@@ -1,10 +1,8 @@
 package marianalins.github.com.nymovienotes.backend;
 
-import java.util.List;
-
 public class TituloController {
 
-    private TituloDAO dao = TituloDAOArquivo.getInstance();
+    private TituloDAO dao = TituloDAOFactory.getInstance();
 
     public void adicionar(Titulo titulo) {
         dao.adicionar(titulo);
@@ -22,12 +20,12 @@ public class TituloController {
         return dao.getTitulos(codigo);
     }
 
-    public List<Titulo> getTitulos(String nome)  throws NaoAchadoException {
+    public Iterador<Titulo> getTitulos(String nome)  throws NaoAchadoException {
         return dao.getTitulos(nome);
     }
 
-    public List<Mostraveis> getLista() {
-        return dao.getLista();
+    public Iterador<Mostraveis> getMostraveis() {
+        return dao.getMostraveis();
     }
 
 
