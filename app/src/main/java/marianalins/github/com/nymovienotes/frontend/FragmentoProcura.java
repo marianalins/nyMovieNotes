@@ -119,14 +119,12 @@ public class FragmentoProcura extends Fragment implements View.OnClickListener {
             nomeEdit.requestFocus();
             return;
         }
-
+        Iterador<Mostraveis> retorno = null;
         if(procurarTituloBtn.isChecked()) {
             TituloController t = new TituloController();
-            Iterador<Mostraveis> retorno;
+
             try {
-                retorno = new IteradorLista<Mostraveis>(
-                        t.getTitulos(nomeEdit.getText().toString().trim()));
-                FragmentoExibir fragmentoExibir = FragmentoExibir.newInstance(retorno);
+                retorno = t.getMostraveis(nomeEdit.getText().toString().trim());
             } catch (NaoAchadoException e) {
                 criaAlert("Não Encontrado", "O Titulo " +
                         nomeEdit.getText().toString().trim() + " não foi encontrado.");
@@ -135,8 +133,7 @@ public class FragmentoProcura extends Fragment implements View.OnClickListener {
         } else if(procurarPessoaBtn.isChecked()) {
             PessoaController t = new PessoaController();
             try {
-                retorno = t.getPessoa(nomeEdit.getText().toString().trim());
-
+                retorno = t.getMostraveis(nomeEdit.getText().toString().trim());
             } catch (NaoAchadoException e) {
                 criaAlert("Não Encontrado", "O Artista " +
                         nomeEdit.getText().toString().trim() + " não foi encontrado.");
@@ -144,7 +141,7 @@ public class FragmentoProcura extends Fragment implements View.OnClickListener {
             }
         }
 
-
+        FragmentoExibir fragmentoExibir = FragmentoExibir.newInstance(retorno);
         getActivity().getSupportFragmentManager().beginTransaction().replace
                 (R.id.fragmentoPrincipal , fragmentoExibir).commit();
     }

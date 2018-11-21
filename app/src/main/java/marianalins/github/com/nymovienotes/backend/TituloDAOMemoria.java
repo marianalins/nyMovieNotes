@@ -64,7 +64,20 @@ public class TituloDAOMemoria implements TituloDAO {
         return new IteradorLista<>(retorno);
     }
 
+    // Pega mostraveis para view no Android App
+    @Override
+    public Iterador<Mostraveis> getMostraveis(String nome) throws NaoAchadoException {
+        List<Mostraveis> retorno = new ArrayList<>();
+        for(Mostraveis t : titulos.values()) {
+            if(t.getNome().toLowerCase().contains(nome.toLowerCase())) {
+                retorno.add(t);
+            }
+        }
 
+        if(retorno.size() == 0) {
+            throw new NaoAchadoException("back.Titulo Não Encontrado.");
+        }
 
-
+        return new IteradorLista<>(retorno);
+    }
 }

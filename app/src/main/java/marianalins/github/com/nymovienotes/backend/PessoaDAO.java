@@ -7,5 +7,5 @@ public interface PessoaDAO {
     void remover(int codigo);
     Pessoa getPessoa(int codigo) throws NaoAchadoException;
     Iterador<Pessoa> getPessoa(String nome) throws NaoAchadoException;
-
+    Iterador<Mostraveis> getMostraveis(String nome) throws NaoAchadoException;
 }

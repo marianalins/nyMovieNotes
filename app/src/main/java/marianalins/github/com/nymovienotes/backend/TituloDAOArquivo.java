@@ -86,23 +86,24 @@ public class TituloDAOArquivo implements TituloDAO {
         }
     }
 
+    @Override
     public void adicionar(Titulo titulo) {
         titulos.put(titulo.getCodigo() , titulo);
         gravarOObjeto();
     }
 
-
+    @Override
     public void remover(Titulo titulo) {
         remover(titulo.getCodigo());
     }
 
-
+    @Override
     public void remover(int codigo) {
         titulos.remove(codigo);
         gravarOObjeto();
     }
 
-
+    @Override
     public Titulo getTitulos(int codigo) throws NaoAchadoException {
         Titulo t = titulos.get(codigo);
         if(t == null) {
@@ -115,6 +116,22 @@ public class TituloDAOArquivo implements TituloDAO {
     public Iterador<Titulo> getTitulos(String nome) throws NaoAchadoException {
         List<Titulo> retorno = new ArrayList<>();
         for(Titulo t : titulos.values()) {
+            if(t.getNome().toLowerCase().contains(nome.toLowerCase())) {
+                retorno.add(t);
+            }
+        }
+
+        if(retorno.size() == 0) {
+            throw new NaoAchadoException("back.Titulo Não Encontrado.");
+        }
+
+        return new IteradorLista<>(retorno);
+    }
+
+    @Override
+    public Iterador<Mostraveis> getMostraveis(String nome) throws NaoAchadoException {
+        List<Mostraveis> retorno = new ArrayList<>();
+        for(Mostraveis t : titulos.values()) {
             if(t.getNome().toLowerCase().contains(nome.toLowerCase())) {
                 retorno.add(t);
             }

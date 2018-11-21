@@ -111,6 +111,21 @@ public class PessoaDAOArquivo implements PessoaDAO {
     }
 
     @Override
+    public Iterador<Mostraveis> getMostraveis(String nome) throws NaoAchadoException {
+        List<Mostraveis> retorno = new ArrayList<>();
+        for(Mostraveis a: pessoas.values()) {
+            if(a.getNome().toLowerCase().contains(nome.toLowerCase())) {
+                retorno.add(a);
+            }
+        }
+
+        if(retorno.size() == 0) {
+            throw new NaoAchadoException("Pessoa Não Encontrada.");
+        }
+        return new IteradorLista<>(retorno);
+    }
+
+    @Override
     public Pessoa getPessoa(int codigo) throws NaoAchadoException {
         Pessoa p = pessoas.get(codigo);
         if(p == null) {

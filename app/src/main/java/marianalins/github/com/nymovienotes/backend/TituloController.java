@@ -28,5 +28,8 @@ public class TituloController {
         return dao.getMostraveis();
     }
 
+    public Iterador<Mostraveis> getMostraveis(String nome) throws NaoAchadoException {
+        return dao.getMostraveis(nome);
+    }
 
 }

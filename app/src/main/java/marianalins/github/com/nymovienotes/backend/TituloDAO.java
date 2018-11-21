@@ -7,4 +7,5 @@ public interface TituloDAO {
     void remover(int codigo);
     Titulo getTitulos(int codigo) throws NaoAchadoException;
     Iterador<Titulo> getTitulos(String nome) throws NaoAchadoException;
+    Iterador<Mostraveis> getMostraveis(String nome) throws NaoAchadoException;
 }

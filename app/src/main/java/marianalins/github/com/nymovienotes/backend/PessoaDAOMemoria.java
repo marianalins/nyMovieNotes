@@ -42,7 +42,22 @@ public class PessoaDAOMemoria implements PessoaDAO {
         }
 
         if(retorno.size() == 0) {
-            throw new NaoAchadoException("back.Pessoa Não Encontrada.");
+            throw new NaoAchadoException("Pessoa Não Encontrada.");
+        }
+        return new IteradorLista<>(retorno);
+    }
+
+    @Override
+    public Iterador<Mostraveis> getMostraveis(String nome) throws NaoAchadoException {
+        List<Mostraveis> retorno = new ArrayList<>();
+        for(Mostraveis a: pessoas.values()) {
+            if(a.getNome().toLowerCase().contains(nome.toLowerCase())) {
+                retorno.add(a);
+            }
+        }
+
+        if(retorno.size() == 0) {
+            throw new NaoAchadoException("Pessoa Não Encontrada.");
         }
         return new IteradorLista<>(retorno);
     }
@@ -50,10 +65,12 @@ public class PessoaDAOMemoria implements PessoaDAO {
     public Pessoa getPessoa(int codigo) throws NaoAchadoException {
         Pessoa p = pessoas.get(codigo);
         if(p == null) {
-            throw new NaoAchadoException("back.Pessoa com Codigo " + codigo + " Não Encontrada.");
+            throw new NaoAchadoException("Pessoa com Codigo " + codigo + " Não Encontrada.");
         }
         return p;
     }
+
+
 
     public void adicionar(Pessoa pessoa) {
         pessoas.put(pessoa.getCodigo(),pessoa);

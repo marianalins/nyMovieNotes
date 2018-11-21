@@ -11,6 +11,10 @@ public class PessoaController {
         return dao.getPessoa(codigo);
     }
 
+    public Iterador<Mostraveis> getMostraveis(String nome) throws NaoAchadoException {
+        return dao.getMostraveis(nome);
+    }
+
     public void adicionar(Pessoa pessoa) {
         dao.adicionar(pessoa);
     }

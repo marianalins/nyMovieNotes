@@ -50,6 +50,7 @@ import static android.app.Activity.RESULT_OK;
  */
 public class FragmentoAdicionar extends Fragment implements View.OnClickListener,
         FragmentoAdicionar2.OnFragmentInteractionListener {
+
     private Button adicionarBtn, adicionarInfoBtn;
     private EditText nomeAdicionarEdit;
     private RadioGroup escolhaFS;
